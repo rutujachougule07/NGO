@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-primary: #E87A1E;
+    --brand-primary-hover: #D2640C;
+    --brand-accent: #F58220;
+    --brand-light: #FFF2E3;
+    --bg-cream: #FDFBF7;
+    --card-border: #F5DEC8;
+  }
+
+  .theme-maroon {
+    --brand-primary: #851C33;
+    --brand-primary-hover: #681326;
+    --brand-accent: #B83250;
+    --brand-light: #FDF2F4;
+    --bg-cream: #FCFAF9;
+    --card-border: #EFE4E7;
+  }
+
+  body {
+    background-color: var(--bg-cream);
+    color: #2E1605;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Smooth card transitions */
+.hover-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Custom Glass Effect */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+}
+
+/* Google Translate UI clean reset */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#google_translate_element {
+  display: none !important;
+}
+
+.skiptranslate:not(.keep-visible) {
+  display: none !important;
+}
+
