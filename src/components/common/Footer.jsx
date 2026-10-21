@@ -50,16 +50,16 @@ export default function Footer({ onOpenDonate }) {
   ];
 
   return (
-    <footer className="bg-[#1F140D] text-white pt-16 pb-12 border-t border-[#382317] relative text-left">
+    <footer className="bg-[#1F140D] text-white pt-10 pb-8 sm:pt-16 sm:pb-12 border-t border-[#382317] relative text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Grid: Brand, Quick Links, Programs, Newsletter */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-[#382317]">
+        {/* Top Grid: Brand, Quick Links, Programs, Contact/Newsletter */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8 pb-10 border-b border-[#382317]">
           
-          {/* Brand Info (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* Brand Info (Full width on mobile, 4 cols on lg) */}
+          <div className="sm:col-span-2 lg:col-span-4 space-y-3.5">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-[#F4A261] shadow-xs shrink-0 bg-white flex items-center justify-center p-0.5">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-[#F4A261] shadow-xs shrink-0 bg-white flex items-center justify-center p-0.5">
                 <img 
                   src="/immense_life_logo.jpg" 
                   alt="Immense Life Emblem" 
@@ -67,7 +67,7 @@ export default function Footer({ onOpenDonate }) {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif font-bold text-xl text-white tracking-tight leading-none">
+                <span className="font-serif font-bold text-lg sm:text-xl text-white tracking-tight leading-none">
                   Immense Life
                 </span>
                 <span className="text-[9px] text-[#F4A261] font-bold uppercase tracking-[0.22em] mt-1">
@@ -81,7 +81,7 @@ export default function Footer({ onOpenDonate }) {
             </p>
 
             {/* Social Media Icons */}
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex items-center gap-2 pt-1">
               {[
                 {
                   name: 'WhatsApp',
@@ -109,7 +109,7 @@ export default function Footer({ onOpenDonate }) {
                   href={s.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-8 h-8 rounded-full bg-[#2C1C13] border border-[#442B1D] text-white/70 hover:text-white hover:border-[#F4A261] hover:bg-[#F4A261] flex items-center justify-center transition"
+                  className="w-8 h-8 rounded-full bg-[#2C1C13] border border-[#442B1D] text-white/70 hover:text-white hover:border-[#F4A261] hover:bg-[#F4A261] flex items-center justify-center transition active:scale-95"
                   title={s.name}
                 >
                   {s.svg}
@@ -118,67 +118,76 @@ export default function Footer({ onOpenDonate }) {
             </div>
           </div>
 
-          {/* Quick Links (2 cols) */}
-          <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F4A261]">
-              Quick Navigation
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {quickLinks.map((item, idx) => (
-                <li key={idx}>
-                  <Link 
-                    to={item.path} 
-                    className="text-white/70 hover:text-[#F4A261] transition inline-flex items-center gap-1.5"
-                  >
-                    <span>{item.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Quick Links & Seva Programs: 2 Columns on Mobile for Clean Compact Layout */}
+          <div className="sm:col-span-2 lg:col-span-5 grid grid-cols-2 gap-4 sm:gap-6">
+            {/* Quick Navigation */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#F4A261]">
+                Quick Navigation
+              </h4>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                {quickLinks.map((item, idx) => (
+                  <li key={idx}>
+                    <Link 
+                      to={item.path} 
+                      className="text-white/70 hover:text-[#F4A261] transition inline-block py-0.5"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Core Programs (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F4A261]">
-              Seva Programs
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {programLinks.map((item, idx) => (
-                <li key={idx}>
-                  <Link 
-                    to={item.path} 
-                    className="text-white/70 hover:text-[#F4A261] transition"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {/* Core Programs */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#F4A261]">
+                Seva Programs
+              </h4>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                {programLinks.map((item, idx) => (
+                  <li key={idx}>
+                    <Link 
+                      to={item.path} 
+                      className="text-white/70 hover:text-[#F4A261] transition inline-block py-0.5"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Contact Placeholders & Newsletter (3 cols) */}
-          <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F4A261]">
+          <div className="sm:col-span-2 lg:col-span-3 space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#F4A261]">
               Contact Information
             </h4>
             
             <div className="space-y-2.5 text-xs text-white/75">
               <p className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-[#F4A261] shrink-0 mt-0.5" />
-                <span>{cmsContact.registeredOffice || "Sai Seva Bhavan, Shirdi Highway, Ahmednagar, MH 423109"}</span>
+                <MapPin className="w-3.5 h-3.5 text-[#F4A261] shrink-0 mt-0.5" />
+                <span className="leading-snug">{cmsContact.registeredOffice || "Sai Seva Bhavan, Shirdi Highway, Ahmednagar, MH 423109"}</span>
               </p>
-              <p className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#F4A261] shrink-0" />
+              <a 
+                href={`tel:${(cmsContact.helplinePhone || "+9184005520").split('/')[0].trim()}`}
+                className="flex items-center gap-2 hover:text-[#F4A261] transition"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#F4A261] shrink-0" />
                 <span>{cmsContact.helplinePhone || "+91 (02423) 258-900 / 1800-209-SEVA"}</span>
-              </p>
-              <p className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#F4A261] shrink-0" />
+              </a>
+              <a 
+                href={`mailto:${cmsContact.officialEmail || "contact@immenselife.org"}`}
+                className="flex items-center gap-2 hover:text-[#F4A261] transition"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#F4A261] shrink-0" />
                 <span>{cmsContact.officialEmail || "contact@immenselife.org"}</span>
-              </p>
+              </a>
             </div>
 
             {/* Newsletter Input */}
-            <form onSubmit={handleSubscribe} className="space-y-2 pt-2">
+            <form onSubmit={handleSubscribe} className="space-y-2 pt-1">
               <label className="text-[11px] font-bold text-white/90 block">
                 Subscribe for Monthly Seva Bulletin:
               </label>
@@ -192,7 +201,8 @@ export default function Footer({ onOpenDonate }) {
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-1.5 bg-[#F4A261] hover:bg-[#E87A1E] text-white rounded-full text-xs font-bold transition shrink-0"
+                  aria-label="Subscribe"
+                  className="px-3.5 py-1.5 bg-[#F4A261] hover:bg-[#E87A1E] text-white rounded-full text-xs font-bold transition shrink-0 active:scale-95"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>
@@ -203,10 +213,10 @@ export default function Footer({ onOpenDonate }) {
         </div>
 
         {/* Bottom Bar: Copyright, Legal Links & 80G Notice */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/60">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-white/60 text-center sm:text-left">
           <p>© {new Date().getFullYear()} Immense Life Foundation. All rights reserved.</p>
 
-          <div className="flex flex-wrap items-center gap-4 text-xs font-medium">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1.5 text-[11px] sm:text-xs font-medium">
             <Link to="/about" className="hover:text-[#F4A261] transition">Section 80G Tax Exemption</Link>
             <span className="text-white/30">•</span>
             <Link to="/about" className="hover:text-[#F4A261] transition">Privacy Policy</Link>

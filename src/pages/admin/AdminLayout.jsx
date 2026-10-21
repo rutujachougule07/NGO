@@ -60,7 +60,9 @@ export default function AdminLayout() {
     customers, 
     notifications, 
     markNotificationRead,
-    setActiveReceiptModal
+    setActiveReceiptModal,
+    currentAdminUser,
+    logoutAdmin
   } = useAdmin();
 
   // Close search on outside click
@@ -97,17 +99,6 @@ export default function AdminLayout() {
     { name: 'Customer Management', path: '/admin/customers', icon: Users },
     { name: 'Receipts & Invoices', path: '/admin/receipts', icon: FileCheck2 },
     { name: 'Reports & Analytics', path: '/admin/reports', icon: BarChart3 },
-    { name: 'Razorpay Integration', path: '/admin/razorpay', icon: CreditCard },
-    { name: 'Settlements & Reconciliation', path: '/admin/settlements', icon: Building2 },
-    { 
-      name: 'Notifications', 
-      path: '/admin/notifications', 
-      icon: Bell, 
-      badge: notifications.filter(n => !n.read).length ? `${notifications.filter(n => !n.read).length} New` : null 
-    },
-    { name: 'Admin Users & Roles', path: '/admin/users', icon: ShieldCheck },
-    { name: 'Audit Logs', path: '/admin/audit-logs', icon: History },
-    { name: 'Settings', path: '/admin/settings', icon: Settings },
   ];
 
   // Global search matching
@@ -133,12 +124,12 @@ export default function AdminLayout() {
 
   const handleLogout = () => {
     setShowLogoutConfirm(false);
-    addToast('Admin session logged out successfully.', 'info');
-    navigate('/');
+    logoutAdmin();
+    navigate('/admin/login');
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] flex text-stone-900 font-sans selection:bg-[#E87A1E] selection:text-white">
+    <div className="admin-panel min-h-screen bg-[#FDFBF7] flex text-stone-900 font-sans selection:bg-[#E87A1E] selection:text-white">
       
       {/* Global Modals Mounted at Root */}
       <ReceiptPreviewModal />
@@ -199,15 +190,15 @@ export default function AdminLayout() {
               <img
                 src="/immense_life_logo.jpg"
                 alt="Immense Life Logo"
-                className="w-10 h-10 rounded-full object-contain p-0.5 bg-white border-2 border-[#E87A1E] shadow-sm shrink-0"
+                className="w-11 h-11 rounded-full object-contain p-0.5 bg-white border-2 border-[#E87A1E] shadow-sm shrink-0"
               />
               {!desktopSidebarCollapsed && (
                 <div className="truncate">
-                  <span className="font-serif font-black text-sm block text-[#381602] leading-tight tracking-tight">
+                  <span className="font-serif font-black text-base sm:text-lg block text-[#381602] leading-tight tracking-tight">
                     Immense Life
                   </span>
-                  <span className="text-[10px] text-[#E87A1E] uppercase tracking-widest font-black">
-                    Admin Panel
+                  <span className="text-[11px] text-[#E87A1E] uppercase tracking-widest font-black">
+                    ADMIN PANEL
                   </span>
                 </div>
               )}
@@ -223,9 +214,9 @@ export default function AdminLayout() {
           </div>
 
           {/* Sidebar Menu List */}
-          <div className="py-3 px-2 sm:px-3 space-y-1 flex-1 overflow-y-auto text-left">
+          <div className="py-3 px-2 sm:px-3 space-y-1.5 flex-1 overflow-y-auto text-left">
             {!desktopSidebarCollapsed && (
-              <div className="text-[10px] font-black uppercase tracking-wider text-stone-400 px-3 py-1">
+              <div className="text-xs font-black uppercase tracking-wider text-stone-400 px-3 py-1.5">
                 Navigation Modules
               </div>
             )}
@@ -246,33 +237,33 @@ export default function AdminLayout() {
                       }
                     }}
                     title={desktopSidebarCollapsed ? item.name : undefined}
-                    className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition group ${
+                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] sm:text-[15px] font-bold transition group ${
                       isActive
                         ? 'bg-[#FFF2E3] text-[#A34805] border border-[#F5DEC8] shadow-xs'
-                        : 'text-stone-600 hover:text-[#381602] hover:bg-[#FFF2E3]/50'
+                        : 'text-stone-700 hover:text-[#381602] hover:bg-[#FFF2E3]/60'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5 truncate">
-                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#E87A1E]' : 'text-stone-400 group-hover:text-[#E87A1E]'}`} />
+                    <div className="flex items-center gap-3 truncate">
+                      <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-[#E87A1E]' : 'text-stone-500 group-hover:text-[#E87A1E]'}`} />
                       {!desktopSidebarCollapsed && (
                         <span className="truncate">{item.name}</span>
                       )}
                     </div>
 
                     {!desktopSidebarCollapsed && item.badge && (
-                      <span className="text-[10px] font-bold bg-[#FFF2E3] text-[#A34805] px-2 py-0.5 rounded-full border border-[#F5DEC8]">
+                      <span className="text-xs font-bold bg-[#FFF2E3] text-[#A34805] px-2.5 py-0.5 rounded-full border border-[#F5DEC8]">
                         {item.badge}
                       </span>
                     )}
 
                     {!desktopSidebarCollapsed && item.hasSubmenu && (
-                      <ChevronDown className={`w-3.5 h-3.5 text-stone-400 transition-transform ${websiteSubmenuOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`w-4 h-4 text-stone-400 transition-transform ${websiteSubmenuOpen ? 'rotate-180' : ''}`} />
                     )}
                   </Link>
 
                   {/* Submenu for Website Management */}
                   {item.hasSubmenu && websiteSubmenuOpen && !desktopSidebarCollapsed && (
-                    <div className="pl-7 pr-2 py-1 space-y-0.5 mt-0.5">
+                    <div className="pl-8 pr-2 py-1 space-y-1 mt-0.5">
                       {item.subItems.map((sub, idx) => {
                         const searchParams = new URLSearchParams(location.search);
                         const currentTab = searchParams.get('tab') || (location.pathname === '/admin/website-cms' ? 'home' : '');
@@ -282,13 +273,13 @@ export default function AdminLayout() {
                             key={idx}
                             to={sub.path}
                             onClick={() => setMobileSidebarOpen(false)}
-                            className={`block px-2.5 py-1 text-[11px] rounded-lg transition ${
+                            className={`block px-3 py-1.5 text-xs sm:text-[13px] rounded-lg transition ${
                               isSubActive 
                                 ? 'font-bold text-[#A34805] bg-[#FFF2E3]' 
-                                : 'font-medium text-stone-500 hover:text-[#A34805] hover:bg-stone-50'
+                                : 'font-semibold text-stone-600 hover:text-[#A34805] hover:bg-stone-50'
                             }`}
                           >
-                            <span className={isSubActive ? 'text-[#E87A1E] font-bold mr-1.5' : 'text-stone-400 mr-1.5'}>•</span>
+                            <span className={isSubActive ? 'text-[#E87A1E] font-black mr-2' : 'text-stone-400 mr-2'}>•</span>
                             {sub.name}
                           </Link>
                         );
@@ -299,15 +290,15 @@ export default function AdminLayout() {
               );
             })}
 
-            {/* Menu Item 15: Logout */}
+            {/* Logout Button */}
             <button
               onClick={() => setShowLogoutConfirm(true)}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 hover:text-red-700 transition"
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] sm:text-[15px] font-bold text-red-600 hover:bg-red-50 hover:text-red-700 transition cursor-pointer"
               title={desktopSidebarCollapsed ? 'Logout' : undefined}
             >
-              <div className="flex items-center gap-2.5 truncate">
-                <LogOut className="w-4 h-4 text-red-500 shrink-0" />
-                {!desktopSidebarCollapsed && <span>15. Logout</span>}
+              <div className="flex items-center gap-3 truncate">
+                <LogOut className="w-5 h-5 text-red-500 shrink-0" />
+                {!desktopSidebarCollapsed && <span>Logout</span>}
               </div>
             </button>
           </div>
@@ -355,10 +346,10 @@ export default function AdminLayout() {
             </button>
 
             <div>
-              <div className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">
+              <div className="text-xs font-bold text-stone-400 uppercase tracking-wider">
                 Admin Console / Immense Life Foundation
               </div>
-              <h1 className="font-serif text-lg sm:text-2xl font-bold text-[#381602]">
+              <h1 className="font-serif text-xl sm:text-2xl font-black text-[#381602]">
                 {getPageTitle()}
               </h1>
             </div>
@@ -369,7 +360,7 @@ export default function AdminLayout() {
             
             {/* Global Search with Live Results Dropdown */}
             <div ref={searchRef} className="relative hidden md:block">
-              <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Global search shops, donors, transactions..."
@@ -379,7 +370,7 @@ export default function AdminLayout() {
                   setShowSearchResults(true);
                 }}
                 onFocus={() => setShowSearchResults(true)}
-                className="w-64 lg:w-80 bg-[#FFFDF9] border border-[#DDD7C9] rounded-full pl-9 pr-3 py-1.5 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E87A1E]"
+                className="w-64 lg:w-80 bg-[#FFFDF9] border border-[#DDD7C9] rounded-full pl-10 pr-4 py-2 text-sm font-medium text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E87A1E]"
               />
 
               {/* Search Results Dropdown */}
@@ -520,39 +511,29 @@ export default function AdminLayout() {
                 <img
                   src="/immense_life_logo.jpg"
                   alt="Admin User Avatar"
-                  className="w-8 h-8 rounded-full object-contain p-0.5 bg-white border-2 border-[#E87A1E]"
+                  className="w-9 h-9 rounded-full object-contain p-0.5 bg-white border-2 border-[#E87A1E]"
                 />
                 <div className="hidden sm:block text-left">
-                  <div className="text-xs font-bold text-[#381602] leading-none">Admin Desk</div>
-                  <div className="text-[10px] text-[#A34805] font-semibold mt-0.5">Super Admin</div>
+                  <div className="text-sm font-bold text-[#381602] leading-none">
+                    {currentAdminUser?.name || 'Dr. Arvind Swaminathan'}
+                  </div>
+                  <div className="text-xs text-[#A34805] font-semibold mt-1">
+                    {currentAdminUser?.role || 'Super Admin'}
+                  </div>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-stone-400 hidden sm:block" />
+                <ChevronDown className="w-4 h-4 text-stone-400 hidden sm:block" />
               </button>
 
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-[#F3DEC8] p-1.5 z-50 text-left">
-                  <div className="p-2 border-b border-stone-100">
-                    <span className="font-bold text-xs text-stone-900 block">Dr. Arvind Swaminathan</span>
-                    <span className="text-[10px] text-stone-400 block font-mono">arvind.swami@immenselife.org</span>
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[#F3DEC8] p-2 z-50 text-left">
+                  <div className="p-2.5 border-b border-stone-100">
+                    <span className="font-bold text-sm text-stone-900 block truncate">
+                      {currentAdminUser?.name || 'Dr. Arvind Swaminathan'}
+                    </span>
+                    <span className="text-xs text-stone-500 block font-mono truncate mt-0.5">
+                      {currentAdminUser?.email || 'arvind.swami@immenselife.org'}
+                    </span>
                   </div>
-
-                  <Link
-                    to="/admin/settings"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-xs text-stone-700 hover:bg-[#FFF2E3] rounded-xl font-medium"
-                  >
-                    <Settings className="w-3.5 h-3.5 text-[#E87A1E]" />
-                    <span>Settings & Security</span>
-                  </Link>
-
-                  <Link
-                    to="/admin/users"
-                    onClick={() => setShowProfileMenu(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-xs text-stone-700 hover:bg-[#FFF2E3] rounded-xl font-medium"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#E87A1E]" />
-                    <span>Roles & Permissions</span>
-                  </Link>
 
                   <Link
                     to="/"
@@ -571,7 +552,7 @@ export default function AdminLayout() {
                     className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50 rounded-xl font-medium text-left"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>15. Logout</span>
+                    <span>Logout</span>
                   </button>
                 </div>
               )}

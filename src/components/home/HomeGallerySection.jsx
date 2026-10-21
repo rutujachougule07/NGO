@@ -5,7 +5,6 @@ import { useAdmin } from '../../context/AdminContext';
 
 export default function HomeGallerySection() {
   const { websiteCMS } = useAdmin();
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [activePhoto, setActivePhoto] = useState(null);
 
   const defaultPhotos = [
@@ -65,8 +64,15 @@ export default function HomeGallerySection() {
     }
   ];
 
+  // Exclude Standee and Sapling Plantation from Homepage (displayed on Gallery page)
+  const excludedFromHome = [
+    "Shop Counter Standee in Green Roots Cafe Indiranagar",
+    "Youth Volunteer Sapling Plantation Drive",
+    "Youth Volunteer Sapling Plantation"
+  ];
+
   const dynamicPhotos = (websiteCMS?.gallery || [])
-    .filter(g => g.status === 'Published')
+    .filter(g => g.status === 'Published' && !excludedFromHome.includes(g.title) && g.category !== 'Partner Shops' && g.category !== 'Environment')
     .map((g, idx) => ({
       id: g.id,
       title: g.title,
@@ -77,19 +83,23 @@ export default function HomeGallerySection() {
       height: idx === 0 ? "h-72 sm:h-96" : "h-48 sm:h-48"
     }));
 
-  const photos = dynamicPhotos.length > 0 ? dynamicPhotos : defaultPhotos;
-  const categories = ['All', ...Array.from(new Set(photos.map(p => p.category)))];
+  const defaultHomePhotos = defaultPhotos
+    .filter(p => !excludedFromHome.includes(p.title) && p.category !== 'Environment')
+    .slice(0, 3)
+    .map((p, idx) => ({
+      ...p,
+      span: idx === 0 ? "md:col-span-2 md:row-span-2" : "md:col-span-1 md:row-span-1",
+      height: idx === 0 ? "h-72 sm:h-96" : "h-48 sm:h-48"
+    }));
 
-  const filteredPhotos = selectedCategory === 'All'
-    ? photos
-    : photos.filter(p => p.category === selectedCategory);
+  const photos = dynamicPhotos.length > 0 ? dynamicPhotos : defaultHomePhotos;
 
   return (
     <section id="gallery" className="pt-8 pb-8 sm:pt-10 sm:pb-10 bg-[#FFF9F3] relative border-b border-[#F5DEC8]/70 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-7 sm:mb-8 space-y-2.5">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2.5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0E3] text-xs font-bold text-[#F4A261] border border-[#F5DEC8]">
             <Sparkles className="w-3.5 h-3.5" />
             <span>VISUAL FIELD ARCHIVES</span>
@@ -102,26 +112,9 @@ export default function HomeGallerySection() {
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
-                selectedCategory === cat
-                  ? 'bg-[#F4A261] text-white shadow-md'
-                  : 'bg-white text-[#493326] border border-[#F5DEC8] hover:border-[#F4A261] hover:bg-[#FFF0E3]'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
         {/* Asymmetric / Responsive Gallery Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
-          {filteredPhotos.map((photo) => (
+          {photos.map((photo) => (
             <div
               key={photo.id}
               onClick={() => setActivePhoto(photo)}

@@ -30,7 +30,7 @@ export default function TopInfoBar() {
     <div className="bg-[#FFFDF9] text-[#5C381E] text-xs py-2 px-4 border-b border-[#F7E6D4] transition-colors">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
         {/* Left: Contact info */}
-        <div className="flex flex-wrap items-center gap-4 text-[11px] sm:text-xs">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4 text-[11px] sm:text-xs">
           <a 
             href={`tel:${phone.split('/')[0].trim()}`} 
             className="flex items-center gap-1.5 hover:text-[#D2640C] transition font-medium"
@@ -55,7 +55,7 @@ export default function TopInfoBar() {
         </div>
 
         {/* Right: Socials, Language, Palette Switcher */}
-        <div className="flex items-center gap-4 text-xs">
+        <div className="flex items-center justify-center sm:justify-end gap-3 sm:gap-4 text-xs">
           {/* Social icons */}
           <div className="flex items-center gap-2.5 text-[#F4A261]">
             <a href="#social" className="hover:text-[#493326] transition opacity-80 hover:opacity-100" title="Twitter/X">

@@ -7,9 +7,7 @@ import {
   Users, 
   Sparkles, 
   Leaf, 
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight
+  ArrowRight
 } from 'lucide-react';
 
 import { useAdmin } from '../../context/AdminContext';
@@ -244,48 +242,19 @@ export default function HomeProgramsSection() {
       id="programs" 
       className="pt-8 pb-8 sm:pt-10 sm:pb-10 bg-[#FFFDFB] relative text-left overflow-hidden select-none border-b border-[#F5DEC8]/60"
     >
-      {/* 1. Header Container (Contained in Max-W-7xl for Elegant Alignment) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0E3] text-xs font-bold text-[#F4A261] border border-[#F5DEC8] shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#F4A261] animate-pulse"></span>
-              <span>HOLISTIC SEVA INITIATIVES</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#493326] tracking-tight">
-              Our Core Programs
-            </h2>
-            <p className="text-base sm:text-lg text-[#493326]/75">
-              Transforming communities through compassionate, organized, and impactful social initiatives.
-            </p>
+      {/* 1. Header Container (Centered Alignment) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10 text-center">
+        <div className="max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0E3] text-xs font-bold text-[#F4A261] border border-[#F5DEC8] shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#F4A261] animate-pulse"></span>
+            <span>HOLISTIC SEVA INITIATIVES</span>
           </div>
-
-          {/* Controls: Dynamic Status Indicator + Prev/Next Arrow Buttons */}
-          <div className="flex items-center gap-3 shrink-0 self-start md:self-end">
-            {/* Dynamic Status Indicator */}
-            <div className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0E3] border border-[#F5DEC8] text-xs font-semibold text-[#493326]/80 shadow-2xs">
-              <span className={`w-2 h-2 rounded-full transition-colors duration-300 ${isPaused ? 'bg-amber-400' : 'bg-emerald-500 animate-pulse'}`} />
-              <span>{isPaused ? 'Paused' : 'Auto-scrolling'}</span>
-            </div>
-
-            {/* Left / Prev Arrow */}
-            <button
-              onClick={() => handleArrowClick('prev')}
-              className="w-12 h-12 rounded-full bg-white hover:bg-[#F4A261] text-[#493326] hover:text-white border border-[#F5DEC8] shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-200 active:scale-95 hover:scale-105"
-              aria-label="Previous Program"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-
-            {/* Right / Next Arrow */}
-            <button
-              onClick={() => handleArrowClick('next')}
-              className="w-12 h-12 rounded-full bg-white hover:bg-[#F4A261] text-[#493326] hover:text-white border border-[#F5DEC8] shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-200 active:scale-95 hover:scale-105"
-              aria-label="Next Program"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#493326] tracking-tight">
+            Our Core Programs
+          </h2>
+          <p className="text-base sm:text-lg text-[#493326]/75 max-w-2xl mx-auto">
+            Transforming communities through compassionate, organized, and impactful social initiatives.
+          </p>
         </div>
       </div>
 

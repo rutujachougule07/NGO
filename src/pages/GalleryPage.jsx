@@ -23,7 +23,7 @@ export default function GalleryPage({ onOpenDonate }) {
       title: "Daily Community Annadan Seva",
       location: "Frontline Community Kitchens",
       category: "Annadan",
-      url: "/hero_seva_banner.jpg",
+      url: "/hero_annadan_seva.jpg",
       caption: "Serving fresh, wholesome, sanctified hot meals to hundreds of elderly citizens, daily workers, and children with love and devotion."
     },
     {
@@ -52,18 +52,18 @@ export default function GalleryPage({ onOpenDonate }) {
     },
     {
       id: 5,
-      title: "Maharashtra Gram Seva & Community Well",
-      location: "Ahmednagar & Shirdi Rural Regions",
-      category: "Clean Water",
-      url: "/about_ngo_team.jpg",
-      caption: "Community center volunteers working hand-in-hand with village elders to provide clean water access and social care."
+      title: "Shop Counter Standee in Green Roots Cafe Indiranagar",
+      location: "Partner Merchant Touchpoint",
+      category: "Partner Shops",
+      url: "/immense_life_logo.jpg",
+      caption: "Countertop merchant QR stands empowering everyday shoppers to round up or micro-donate for community meals."
     },
     {
       id: 6,
-      title: "Go Green Maharashtra & Tree Plantation",
-      location: "Rural Ecological Belts",
-      category: "Relief",
-      url: "/ngo_community_planting.jpg",
+      title: "Youth Volunteer Sapling Plantation Drive",
+      location: "Rural Maharashtra Ecological Belts",
+      category: "Environment",
+      url: "/hero_sapling_hands.jpg",
       caption: "Youth and villagers planting hundreds of native trees to preserve soil fertility and ensure clean rural environments."
     }
   ];
@@ -91,22 +91,22 @@ export default function GalleryPage({ onOpenDonate }) {
     <div className="bg-[#FDFBF7] min-h-screen text-left">
       
       {/* Top Banner & Header: Centered Text Content */}
-      <section className="bg-gradient-to-b from-[#FFF0E3]/70 via-[#FFF9F3] to-[#FFFDFB] pt-14 pb-16 border-b border-[#F5DEC8] text-center relative overflow-hidden">
+      <section className="bg-gradient-to-b from-[#FFF0E3]/70 via-[#FFF9F3] to-[#FFFDFB] pt-7 pb-3 sm:pt-8 sm:pb-4 border-b border-[#F5DEC8] text-center relative overflow-hidden">
         {/* Decorative Ambient Glows */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#F4A261]/10 rounded-full blur-3xl pointer-events-none -mt-20"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0E3] text-xs font-bold text-[#F4A261] border border-[#F5DEC8] shadow-2xs">
+          <div className="max-w-3xl mx-auto text-center space-y-2.5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF0E3] text-xs font-bold text-[#F4A261] border border-[#F5DEC8] shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-[#F4A261] animate-pulse"></span>
               <span>EYEWITNESS FIELD ARCHIVES & PHOTO VERIFICATION</span>
             </div>
             
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#493326] leading-tight tracking-tight">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#493326] leading-tight tracking-tight">
               Moments on the <span className="text-[#F4A261]">Frontline</span>
             </h1>
             
-            <p className="text-base sm:text-lg text-[#493326]/80 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-[#493326]/80 leading-relaxed max-w-2xl mx-auto">
               Explore unfiltered snapshots of our voluntary community kitchens, mobile medical outreach, and child development classes.
             </p>
           </div>
@@ -114,7 +114,7 @@ export default function GalleryPage({ onOpenDonate }) {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-14 sm:pt-5 sm:pb-16 space-y-8">
         
         {/* Category Tabs */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-[#F5DEC8]">

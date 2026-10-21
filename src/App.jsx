@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import TopInfoBar from './components/common/TopInfoBar';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import DonationModal from './components/common/DonationModal';
@@ -35,6 +34,8 @@ import AdminUsers from './pages/admin/AdminUsers';
 import AdminAuditLogs from './pages/admin/AdminAuditLogs';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminProjects from './pages/admin/AdminProjects';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminProtectedRoute from './pages/admin/AdminProtectedRoute';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -85,10 +86,7 @@ export default function App() {
 
         {/* Top Header & Navigation for Public Site */}
         {!isAdminRoute && (
-          <>
-            <TopInfoBar />
-            <Navbar onOpenDonate={() => handleOpenDonate()} />
-          </>
+          <Navbar onOpenDonate={() => handleOpenDonate()} />
         )}
 
         {/* Main Content Router */}
@@ -108,8 +106,18 @@ export default function App() {
             <Route path="/pay" element={<ShopQRPayPage />} />
             <Route path="/pay/:shopId" element={<ShopQRPayPage />} />
 
-            {/* Admin Console Comprehensive Routes */}
-            <Route path="/admin" element={<AdminLayout />}>
+            {/* Admin Login Route */}
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+
+            {/* Admin Console Comprehensive Routes (Protected) */}
+            <Route 
+              path="/admin" 
+              element={
+                <AdminProtectedRoute>
+                  <AdminLayout />
+                </AdminProtectedRoute>
+              }
+            >
               <Route index element={<AdminDashboard />} />
               <Route path="website-cms" element={<AdminWebsiteCMS />} />
               <Route path="shops" element={<AdminShops />} />
@@ -118,12 +126,14 @@ export default function App() {
               <Route path="customers" element={<AdminCustomers />} />
               <Route path="receipts" element={<AdminReceipts />} />
               <Route path="reports" element={<AdminReports />} />
-              <Route path="razorpay" element={<AdminRazorpay />} />
-              <Route path="settlements" element={<AdminSettlements />} />
-              <Route path="notifications" element={<AdminNotifications />} />
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="audit-logs" element={<AdminAuditLogs />} />
-              <Route path="settings" element={<AdminSettings />} />
+
+              {/* Redirect removed sections to /admin */}
+              <Route path="razorpay" element={<Navigate to="/admin" replace />} />
+              <Route path="settlements" element={<Navigate to="/admin" replace />} />
+              <Route path="notifications" element={<Navigate to="/admin" replace />} />
+              <Route path="users" element={<Navigate to="/admin" replace />} />
+              <Route path="audit-logs" element={<Navigate to="/admin" replace />} />
+              <Route path="settings" element={<Navigate to="/admin" replace />} />
 
               {/* Backward compatibility and submenu aliases */}
               <Route path="content" element={<AdminWebsiteCMS />} />

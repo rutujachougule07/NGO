@@ -154,77 +154,77 @@ export default function AdminShops() {
       {/* Main Shops Table */}
       <div className="bg-white rounded-3xl border border-[#F3DEC8] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-[#FFFDF9] border-b border-[#F3DEC8] text-stone-500 font-bold uppercase tracking-wider text-[10px]">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-[#FFFDF9] border-b border-[#F3DEC8] text-stone-600 font-bold uppercase tracking-wider text-xs">
               <tr>
-                <th className="py-3 px-4">Shop ID & Name</th>
-                <th className="py-3 px-3">Owner & Contact</th>
-                <th className="py-3 px-3">Address & City</th>
-                <th className="py-3 px-3">GSTIN</th>
-                <th className="py-3 px-3">Reg Date</th>
-                <th className="py-3 px-3 text-center">QR Status</th>
-                <th className="py-3 px-3 text-right">Transactions</th>
-                <th className="py-3 px-3 text-right">Total Collection</th>
-                <th className="py-3 px-3 text-center">Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-4">Shop ID & Name</th>
+                <th className="py-3.5 px-3">Owner & Contact</th>
+                <th className="py-3.5 px-3">Address & City</th>
+                <th className="py-3.5 px-3">GSTIN</th>
+                <th className="py-3.5 px-3">Reg Date</th>
+                <th className="py-3.5 px-3 text-center">QR Status</th>
+                <th className="py-3.5 px-3 text-right">Transactions</th>
+                <th className="py-3.5 px-3 text-right">Total Collection</th>
+                <th className="py-3.5 px-3 text-center">Status</th>
+                <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100">
               {filteredShops.map(shop => (
-                <tr key={shop.id} className="hover:bg-[#FFF2E3]/25 transition">
-                  <td className="py-3 px-4">
-                    <div className="font-bold text-stone-900 flex items-center gap-1.5">
-                      <span className="font-mono text-[10px] text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded">
+                <tr key={shop.id} className="hover:bg-[#FFF2E3]/35 transition">
+                  <td className="py-3.5 px-4">
+                    <div className="font-bold text-stone-900 flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
                         {shop.id}
                       </span>
-                      <span>{shop.name}</span>
+                      <span className="text-sm font-bold text-stone-900">{shop.name}</span>
                     </div>
-                    <div className="text-[10px] text-[#A34805] font-semibold mt-0.5">
+                    <div className="text-xs text-[#A34805] font-semibold mt-1">
                       {shop.category}
                     </div>
                   </td>
 
-                  <td className="py-3 px-3">
-                    <div className="font-semibold text-stone-800">{shop.owner}</div>
-                    <div className="text-[10px] text-stone-400 font-mono">{shop.phone}</div>
+                  <td className="py-3.5 px-3">
+                    <div className="font-bold text-stone-900 text-sm">{shop.owner}</div>
+                    <div className="text-xs text-stone-500 font-mono mt-0.5">{shop.phone}</div>
                   </td>
 
-                  <td className="py-3 px-3">
-                    <div className="text-stone-700 truncate max-w-[150px]">{shop.address}</div>
-                    <div className="text-[10px] text-stone-400">{shop.city}, {shop.state}</div>
+                  <td className="py-3.5 px-3">
+                    <div className="text-stone-800 text-sm font-medium truncate max-w-[170px]">{shop.address}</div>
+                    <div className="text-xs text-stone-500 mt-0.5">{shop.city}, {shop.state}</div>
                   </td>
 
-                  <td className="py-3 px-3 font-mono text-[11px] text-stone-600">
+                  <td className="py-3.5 px-3 font-mono text-xs font-semibold text-stone-700">
                     {shop.gstin || <span className="text-stone-300">N/A</span>}
                   </td>
 
-                  <td className="py-3 px-3 text-stone-500 text-[11px]">
+                  <td className="py-3.5 px-3 text-stone-600 text-xs font-semibold">
                     {shop.registeredDate}
                   </td>
 
-                  <td className="py-3 px-3 text-center">
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold inline-flex items-center gap-1 ${
+                  <td className="py-3.5 px-3 text-center">
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5 ${
                       shop.qrStatus === 'Active'
                         ? 'bg-emerald-100 text-emerald-800'
                         : 'bg-amber-100 text-amber-800'
                     }`}>
-                      <QrCode className="w-3 h-3" />
+                      <QrCode className="w-3.5 h-3.5" />
                       {shop.qrStatus}
                     </span>
                   </td>
 
-                  <td className="py-3 px-3 text-right font-bold text-stone-800">
+                  <td className="py-3.5 px-3 text-right font-extrabold text-stone-900 text-sm">
                     {shop.transactionsCount}
                   </td>
 
-                  <td className="py-3 px-3 text-right font-bold text-[#E87A1E]">
+                  <td className="py-3.5 px-3 text-right font-black text-base text-[#E87A1E]">
                     ₹{shop.totalCollected.toLocaleString('en-IN')}
                   </td>
 
-                  <td className="py-3 px-3 text-center">
+                  <td className="py-3.5 px-3 text-center">
                     <button
                       onClick={() => toggleShopStatus(shop.id)}
-                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer transition ${
+                      className={`px-3 py-1 rounded-full text-xs font-bold cursor-pointer transition ${
                         shop.status === 'Active'
                           ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
                           : 'bg-stone-200 text-stone-700 hover:bg-stone-300'

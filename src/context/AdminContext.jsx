@@ -86,6 +86,23 @@ export function AdminProvider({ children }) {
     return saved ? JSON.parse(saved) : initialFoundationSettings;
   });
 
+  // Admin Authentication State
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
+    return localStorage.getItem('ilf_admin_auth') === 'true';
+  });
+
+  const [currentAdminUser, setCurrentAdminUser] = useState(() => {
+    const saved = localStorage.getItem('ilf_admin_current_user');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return initialAdminUsersData[0];
+      }
+    }
+    return initialAdminUsersData[0];
+  });
+
   // Global search query
   const [searchQuery, setSearchQuery] = useState('');
   const [activeReceiptModal, setActiveReceiptModal] = useState(null);
@@ -103,14 +120,22 @@ export function AdminProvider({ children }) {
   useEffect(() => { localStorage.setItem('ilf_admin_website_cms', JSON.stringify(websiteCMS)); }, [websiteCMS]);
   useEffect(() => { localStorage.setItem('ilf_admin_razorpay', JSON.stringify(razorpayConfig)); }, [razorpayConfig]);
   useEffect(() => { localStorage.setItem('ilf_admin_settings', JSON.stringify(foundationSettings)); }, [foundationSettings]);
+  useEffect(() => {
+    localStorage.setItem('ilf_admin_auth', isAdminAuthenticated ? 'true' : 'false');
+  }, [isAdminAuthenticated]);
+  useEffect(() => {
+    if (currentAdminUser) {
+      localStorage.setItem('ilf_admin_current_user', JSON.stringify(currentAdminUser));
+    }
+  }, [currentAdminUser]);
 
   // Helper to log audit event
   const logAudit = (action, module, details) => {
     const newLog = {
       id: `AUD-${Math.floor(1000 + Math.random() * 9000)}`,
       timestamp: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-      adminName: 'Admin Desk (Super Admin)',
-      role: 'Super Admin',
+      adminName: currentAdminUser ? `${currentAdminUser.name} (${currentAdminUser.role})` : 'Admin Desk (Super Admin)',
+      role: currentAdminUser ? currentAdminUser.role : 'Super Admin',
       action,
       module,
       ipAddress: '14.139.122.4',
@@ -624,6 +649,74 @@ export function AdminProvider({ children }) {
     }));
   };
 
+  // --- Admin Auth Actions ---
+  const loginAdmin = ({ email, password }) => {
+    const normalizedInput = (email || '').trim().toLowerCase();
+    const cleanPassword = (password || '').trim();
+
+    if (!normalizedInput) {
+      return { success: false, message: 'Please enter your admin email or username.' };
+    }
+    if (!cleanPassword) {
+      return { success: false, message: 'Please enter your password.' };
+    }
+
+    // Check if input matches default admin or any existing user in adminUsers
+    let matchedUser = adminUsers.find(
+      u => u.email.toLowerCase() === normalizedInput || u.id.toLowerCase() === normalizedInput || (u.name && u.name.toLowerCase() === normalizedInput)
+    );
+
+    // Default alias matching for quick access
+    if (!matchedUser && (normalizedInput === 'admin' || normalizedInput === 'admin@immenselife.org' || normalizedInput === 'superadmin')) {
+      matchedUser = adminUsers[0] || {
+        id: "USR-001",
+        name: "Dr. Arvind Swaminathan",
+        email: "arvind.swami@immenselife.org",
+        role: "Super Admin",
+        status: "Active"
+      };
+    }
+
+    if (!matchedUser) {
+      return { success: false, message: 'Invalid admin credentials. Use admin@immenselife.org' };
+    }
+
+    if (matchedUser.status === 'Suspended') {
+      return { success: false, message: 'This admin account is currently suspended. Please contact the Super Admin.' };
+    }
+
+    // Accepted passwords: admin123, admin, immense2026, or at least 4 characters
+    const validPasswords = ['admin123', 'immense2026', 'admin', 'password', '123456'];
+    if (!validPasswords.includes(cleanPassword) && cleanPassword.length < 4) {
+      return { success: false, message: 'Invalid password. (Default password: admin123)' };
+    }
+
+    const updatedUser = {
+      ...matchedUser,
+      lastLogin: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setCurrentAdminUser(updatedUser);
+    setIsAdminAuthenticated(true);
+    localStorage.setItem('ilf_admin_auth', 'true');
+    localStorage.setItem('ilf_admin_current_user', JSON.stringify(updatedUser));
+
+    // Update lastLogin in adminUsers list
+    setAdminUsers(prev => prev.map(u => u.id === updatedUser.id ? { ...u, lastLogin: updatedUser.lastLogin } : u));
+
+    logAudit('Admin Portal Login', 'Authentication', `Logged in as ${updatedUser.name} (${updatedUser.role})`);
+    addToast(`Authenticated as ${updatedUser.name}! Welcome to Admin Console.`, 'success');
+    return { success: true, user: updatedUser };
+  };
+
+  const logoutAdmin = () => {
+    const userName = currentAdminUser?.name || 'Administrator';
+    logAudit('Admin Portal Logout', 'Authentication', `${userName} logged out of admin session.`);
+    setIsAdminAuthenticated(false);
+    localStorage.removeItem('ilf_admin_auth');
+    addToast('Admin session terminated successfully.', 'info');
+  };
+
   // Computed summary metrics for Dashboard
   const totalRegisteredShops = shops.length;
   const activeShopsCount = shops.filter(s => s.status === 'Active').length;
@@ -640,6 +733,13 @@ export function AdminProvider({ children }) {
 
   return (
     <AdminContext.Provider value={{
+      // Auth State & Actions
+      isAdminAuthenticated,
+      setIsAdminAuthenticated,
+      currentAdminUser,
+      setCurrentAdminUser,
+      loginAdmin,
+      logoutAdmin,
       shops,
       transactions,
       customers,

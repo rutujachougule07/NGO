@@ -99,3 +99,44 @@ body {
   display: none !important;
 }
 
+/* ========================================================
+   Admin Panel Global Typography Enhancement
+   Matches the crisp, bold, larger readable style of the sidebar
+   ======================================================== */
+.admin-panel {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif !important;
+  color: #1c1917;
+  -webkit-font-smoothing: antialiased;
+}
+
+.admin-panel table th {
+  font-size: 0.8125rem !important; /* 13px */
+  font-weight: 800 !important;
+  color: #57534e !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  padding-top: 0.875rem !important;
+  padding-bottom: 0.875rem !important;
+}
+
+.admin-panel table td {
+  font-size: 0.875rem !important; /* 14px */
+  color: #292524 !important;
+  padding-top: 0.875rem !important;
+  padding-bottom: 0.875rem !important;
+}
+
+.admin-panel table td .font-mono {
+  font-size: 0.8125rem !important; /* 13px */
+}
+
+.admin-panel table tbody tr:hover {
+  background-color: #FFF2E3 !important;
+}
+
+.admin-panel input,
+.admin-panel select,
+.admin-panel textarea {
+  font-size: 0.875rem !important; /* 14px */
+}
+

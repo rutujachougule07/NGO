@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Heart, Sparkles, Globe, Check } from 'lucide-react';
-import { useLanguage } from '../../context/LanguageContext';
+import { Menu, X, Heart } from 'lucide-react';
 
 export default function Navbar({ onOpenDonate }) {
-  const { currentLang, languages, changeLanguage } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -153,33 +151,6 @@ export default function Navbar({ onOpenDonate }) {
             >
               Shop QR Pay
             </Link>
-
-            {/* Mobile Language Switcher */}
-            <div className="pt-2 pb-1 border-t border-[#F5DEC8]/80 mt-2">
-              <div className="flex items-center gap-2 px-1 mb-2 text-xs font-bold text-[#A34805]">
-                <Globe className="w-3.5 h-3.5 text-[#E87A1E]" />
-                <span>भाषा निवडा / Choose Language</span>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {languages.map((l) => (
-                  <button
-                    key={l.code}
-                    onClick={() => {
-                      changeLanguage(l.code);
-                      setMobileMenuOpen(false);
-                    }}
-                    className={`py-2 px-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border transition ${
-                      currentLang === l.code
-                        ? 'bg-[#E87A1E] text-white border-[#E87A1E] shadow-xs'
-                        : 'bg-[#FFFDF9] text-[#493326] border-[#F5DEC8] hover:bg-[#FFF2E3]'
-                    }`}
-                  >
-                    <span>{l.flag}</span>
-                    <span>{l.nativeName}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
 
             <div className="pt-2">
               <button

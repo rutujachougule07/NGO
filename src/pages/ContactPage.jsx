@@ -49,22 +49,22 @@ export default function ContactPage() {
     <div className="bg-[#FDFBF7] min-h-screen text-left">
       
       {/* Top Banner & Header: Centered Text Content */}
-      <section className="bg-gradient-to-b from-[#FFF0E3]/70 via-[#FFF9F3] to-[#FFFDFB] pt-14 pb-16 border-b border-[#F5DEC8] text-center relative overflow-hidden">
+      <section className="bg-gradient-to-b from-[#FFF0E3]/70 via-[#FFF9F3] to-[#FFFDFB] pt-10 pb-6 sm:pt-12 sm:pb-8 border-b border-[#F5DEC8] text-center relative overflow-hidden">
         {/* Decorative Ambient Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#F4A261]/10 rounded-full blur-3xl pointer-events-none -mt-20"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-4">
+          <div className="max-w-3xl mx-auto text-center space-y-3">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0E3] text-xs font-bold text-[#F4A261] border border-[#F5DEC8] shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-[#F4A261] animate-pulse"></span>
               <span>24/7 VOLUNTEER HELPLINE & COMMUNITY ASSISTANCE</span>
             </div>
             
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#493326] leading-tight tracking-tight">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#493326] leading-tight tracking-tight">
               Connect With Our Team & <span className="text-[#F4A261]">Seva Hubs</span>
             </h1>
             
-            <p className="text-base sm:text-lg text-[#493326]/80 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-[#493326]/80 leading-relaxed max-w-2xl mx-auto">
               Whether you want to sponsor an active relief campaign, volunteer in our Annadan kitchen, enroll a shop in our fee-free QR network, or request emergency assistance, our community team is here for you.
             </p>
           </div>
@@ -72,7 +72,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 space-y-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16 sm:pt-8 sm:pb-20 space-y-14">
         
         {/* Contact Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
